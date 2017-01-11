@@ -2,7 +2,7 @@
 
 namespace OdeToFood.Services
 {
-    public class Greeter
+    public class Greeter : IGreeter
     {
         private string _greeting;
 
