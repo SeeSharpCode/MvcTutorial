@@ -37,6 +37,34 @@ namespace OdeToFood.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _restaurantData.Get(id);
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            return View(model);
+        }
+
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, RestaurantEditViewModel model)
+        {
+            Restaurant restauraunt = _restaurantData.Get(id);
+
+            if (ModelState.IsValid)
+            {
+                restauraunt.Cuisine = model.Cuisine;
+                restauraunt.Name = model.Name;
+                _restaurantData.Commit();
+                return RedirectToAction("Details", new { id = restauraunt.Id });
+            }
+
+            return View(restauraunt);
+        }
+
         // These route constraint attributes help the MVC framework know which view to display.
         [HttpGet]
         public IActionResult Create()
@@ -55,6 +83,7 @@ namespace OdeToFood.Controllers
                 newRestaurant.Name = model.Name;
 
                 newRestaurant = _restaurantData.Add(newRestaurant);
+                _restaurantData.Commit();
 
                 // This follows the POST-REDIRECT-GET pattern.
                 // If I return the Details view here (as seen below), it works, but the URL is still set to /home/create.

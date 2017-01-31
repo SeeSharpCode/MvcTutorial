@@ -5,20 +5,12 @@
 }
 
 <h1>Welcome!</h1>
-<table>
-    @foreach (var restaurant in Model.Restaurants)
-    {
-        <tr>
-            <td>
-                <a href="/home/details/@restaurant.Id">Details</a>
-                @Html.ActionLink("View", "Details", new { id = restaurant.Id })
-            </td>
-            <td>@restaurant.Id</td>
-            <td>@restaurant.Name</td>
-        </tr>
-    }
-</table>
 
-@section footer {
-    <h3>@Model.CurrentMessage</h3>
+@foreach (var restaurant in Model.Restaurants)
+{
+    @Html.Partial("_Summary", restaurant)
 }
+
+<div>
+    <a asp-controller="Home" asp-action="Create">Create</a>
+</div>
