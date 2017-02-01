@@ -10,8 +10,8 @@
         @RenderBody()
     </div>
     <footer>
-        <h3>Hey</h3>
         @RenderSection("footer", required: false)
+        @await Component.InvokeAsync("Greeting")
     </footer>
 </body>
 </html>
