@@ -47,12 +47,18 @@ namespace OdeToFood
             else
                 app.UseExceptionHandler(new ExceptionHandlerOptions { ExceptionHandler = context => context.Response.WriteAsync("Exception, crap!") });
 
+            app.UseStaticFiles();
+
+            app.UseNodeModules(env.ContentRootPath);
+
             app.UseIdentity();
 
             app.UseMvcWithDefaultRoute();
+
             // app.UseMvc(ConfigureRoutes);
 
-            app.Run(ctx => ctx.Response.WriteAsync("Not found"));
+            // Helpful when learning routing, but this can mask errors, such as missing script files.
+            // app.Run(ctx => ctx.Response.WriteAsync("Not found"));
 
             //app.Run(async (context) =>
             //{
